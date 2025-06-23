@@ -1,21 +1,22 @@
 {
     "version": 2,
-    "functions": {
-    "api/index.php": {
-        "runtime": "vercel-php@0.6.1",
-        "memory": 1024,
-        "maxDuration": 30
-    }
-},
+    "builds": [
+        {
+            "src": "/public/index.php",
+            "use": "@vercel-community/php"
+        }
+    ],
     "routes": [
         {
             "src": "/(css|js|images|fonts|storage)/(.*)",
             "dest": "/public/$1/$2"
         },
         {
+            "handle": "filesystem"
+        },
+        {
             "src": "/(.*)",
-            "dest": "/api/index.php"
+            "dest": "/public/index.php"
         }
-    ],
-    "outputDirectory": "public"
+    ]
 }
