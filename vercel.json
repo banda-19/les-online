@@ -1,22 +1,8 @@
 {
-    "version": 2,
-    "builds": [
+    "rewrites": [
         {
-            "src": "/public/index.php",
-            "use": "@vercel-community/php"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(css|js|images|fonts|storage)/(.*)",
-            "dest": "/public/$1/$2"
-        },
-        {
-            "handle": "filesystem"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/public/index.php"
+            "source": "/(.*)",
+            "destination": "/api"
         }
     ]
 }
