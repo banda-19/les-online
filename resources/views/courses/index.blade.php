@@ -17,15 +17,16 @@
                                 <img class="h-48 w-full object-cover" src="{{ $course->thumbnail ?? 'https://via.placeholder.com/400x200?text=LesOnline' }}" alt="{{ $course->title }}">
                                 <div class="p-6 flex flex-col flex-grow">
                                     <h3 class="text-xl font-semibold text-gray-800">{{ $course->title }}</h3>
-                                    <div class="mt-4">
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm font-medium text-gray-700">Progres</span>
-                                            <span class="text-sm font-medium text-indigo-700">25%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 25%"></div>
-                                        </div>
-                                    </div>
+                                   <div class="mt-4">
+    <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium text-gray-700">Progres</span>
+        <span class="text-sm font-medium text-indigo-700">{{ $course->progress }}%</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5">
+        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $course->progress }}%"></div>
+    </div>
+</div>
+
                                     <div class="mt-auto pt-4">
                                         <a href="{{ route('courses.show', $course->slug) }}" class="inline-flex items-center justify-center w-full text-center bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out">
                                             Lanjutkan Belajar

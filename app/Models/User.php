@@ -6,18 +6,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser; // <-- TAMBAHKAN INI
-use Filament\Panel;
 
-class User extends Authenticatable implements FilamentUser // <-- UBAH INI
+class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -28,7 +25,7 @@ class User extends Authenticatable implements FilamentUser // <-- UBAH INI
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -47,14 +44,14 @@ class User extends Authenticatable implements FilamentUser // <-- UBAH INI
             'password' => 'hashed',
         ];
     }
-    // app/Models/User.php
-public function courses()
-{
-    return $this->belongsToMany(Course::class, 'course_user');
-}
-public function canAccessPanel(Panel $panel): bool
-{
-    // Kembalikan 'true' HANYA JIKA role pengguna ini adalah 'admin'
-    return $this->role === 'admin';
-}
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_user');
+    }
+     public function completedLessons()
+    {
+        return $this->belongsToMany(Lesson::class, 'lesson_user')->withTimestamps();
+    }
+
 }

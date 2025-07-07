@@ -60,29 +60,30 @@
     {{-- =================================== --}}
     {{--    BAGIAN TOMBOL NAVIGASI DIPERBAIKI   --}}
     {{-- =================================== --}}
-    <div class="flex justify-between mt-10 pt-6 border-t">
-        @if($previousLesson)
-            <a href="{{ route('lessons.show', ['course' => $course->slug, 'lesson' => $previousLesson->slug]) }}" class="inline-flex items-center bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-                Materi Sebelumnya
-            </a>
-        @else
-             <span class="inline-flex items-center bg-gray-200 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-                Materi Sebelumnya
-            </span>
-        @endif
+    {{-- Ganti seluruh div navigasi lama dengan ini --}}
+<div class="flex justify-between mt-10 pt-6 border-t">
+    {{-- Tombol Kembali --}}
+    @if($previousLesson)
+        <a href="{{ route('lessons.show', ['course' => $course->slug, 'lesson' => $previousLesson->slug]) }}" class="inline-flex items-center bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+             <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+            Materi Sebelumnya
+        </a>
+    @else
+         <span class="inline-flex items-center bg-gray-200 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed">Materi Sebelumnya</span>
+    @endif
 
-        @if($nextLesson)
-            <a href="{{ route('lessons.show', ['course' => $course->slug, 'lesson' => $nextLesson->slug]) }}" class="inline-flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
-                Materi Selanjutnya
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ml-2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-            </a>
-        @else
-             <span class="inline-flex items-center bg-gray-200 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed">
-                Materi Selanjutnya
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ml-2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
-            </span>
-        @endif
-    </div>
+    {{-- Form & Tombol Lanjut/Selesai --}}
+    <form action="{{ route('lessons.complete', $lesson) }}" method="POST">
+        @csrf
+        <button type="submit" class="inline-flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+            @if($nextLesson)
+                Tandai Selesai & Lanjut
+                <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+            @else
+                Selesaikan Kursus
+                <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+            @endif
+        </button>
+    </form>
+</div>
 @endsection

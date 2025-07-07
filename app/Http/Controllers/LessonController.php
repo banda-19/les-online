@@ -38,4 +38,20 @@ class LessonController extends Controller
     // dan kirim data materi sebelum/sesudahnya.
     return view('lessons.show', compact('course', 'lesson', 'previousLesson', 'nextLesson'));
 }
+
+ public function complete(Request $request, Lesson $lesson)
+    {
+        auth()->user()->completedLessons()->syncWithoutDetaching($lesson->id);
+
+        $course = $lesson->course;
+        $allLessons = $course->lessons;
+        $currentLessonIndex = $allLessons->search(fn($item) => $item->id === $lesson->id);
+        $nextLesson = $allLessons->get($currentLessonIndex + 1);
+
+        if ($nextLesson) {
+            return redirect()->route('lessons.show', ['course' => $course->slug, 'lesson' => $nextLesson->slug]);
+        }
+
+        return redirect()->route('courses.show', $course->slug)->with('success', 'Selamat! Anda telah menyelesaikan semua materi di kursus ini.');
+    }
 }
