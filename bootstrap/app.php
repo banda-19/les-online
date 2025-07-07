@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Jika tidak, arahkan ke halaman login biasa.
         return route('login');
     });
+    $middleware->trustProxies(at: '*');
 })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
